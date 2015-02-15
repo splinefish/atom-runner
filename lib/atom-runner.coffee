@@ -78,6 +78,7 @@ class AtomRunner
 
     view.setTitle(editor.getTitle())
     pane.activateItem(view)
+
     @execute(cmd, editor, view, selection)
 
   stop: (view) ->
@@ -112,7 +113,10 @@ class AtomRunner
       dir = atom.project.path || '.'
       if not fs.statSync(dir).isDirectory()
         dir = p.dirname(dir)
-      @child = spawn(cmd, args, cwd: dir)
+      if process.platform == 'win32'
+        @child = spawn('cmd', ['/c', cmd, args], cwd: dir)
+      else
+        @child = spawn(cmd, args, cwd: dir)
       @child.on 'error', (err) =>
         view.append(err.stack, 'stderr')
         view.scrollToBottom()

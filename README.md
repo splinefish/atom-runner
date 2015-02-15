@@ -1,3 +1,7 @@
+# Modification
+
+Npm installed applications is now properly executed on the Windows platform.
+
 # Atom Runner
 
 This package will run various script files inside of Atom.
